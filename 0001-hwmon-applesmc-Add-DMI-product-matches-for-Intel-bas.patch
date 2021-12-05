@@ -1,0 +1,39 @@
+From 67d03e913f606244996315197eef15ec3e72190a Mon Sep 17 00:00:00 2001
+From: Joe Jamison <joe@smaklab.com>
+Date: Sat, 28 Nov 2020 10:30:25 -0600
+Subject: [PATCH] hwmon: (applesmc) Add DMI product matches for Intel-based
+ Xserves (non-RackMac*)
+
+This patch adds the DMI Product ID for Intel-based Xserve machines.
+They use the same SMC accessible from the same data ports.
+
+The 'Xserve' product ID only resolves to SMC-containing
+Intel-based Xserves, as the PowerPC machines are identified
+by the 'RackMac' identifier.
+
+Tested on: Xserve3,1
+
+Tested-by: Joe Jamison <joe@smaklab.com> # Xserve3,1
+Signed-off-by: Joe Jamison <joe@smaklab.com>
+---
+ drivers/hwmon/applesmc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
+index 79b498f816fe..89207af81c48 100644
+--- a/drivers/hwmon/applesmc.c
++++ b/drivers/hwmon/applesmc.c
+@@ -1299,6 +1299,10 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
+ 	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
+ 	  DMI_MATCH(DMI_PRODUCT_NAME, "iMac") },
+ 	},
++	{ applesmc_dmi_match, "Apple Xserve", {
++	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
++	  DMI_MATCH(DMI_PRODUCT_NAME, "Xserve") },
++	},
+ 	{ .ident = NULL }
+ };
+ 
+-- 
+2.20.1
+
